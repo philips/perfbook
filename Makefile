@@ -205,6 +205,12 @@ perfbook-1c.pdf: $(LATEXSOURCES) $(EPSSOURCES) extraction embedfonts
 	sed -e 's/,twocolumn//' -e '/^\\frontmatter/a \\\\pagestyle{plain}' -e 's/setboolean{twocolumn}{true}/setboolean{twocolumn}{false}/' < perfbook.tex > perfbook-1c.tex
 	sh utilities/runlatex.sh perfbook-1c bib
 
+perfbook-1k.pdf: $(LATEXSOURCES) $(EPSSOURCES) extraction embedfonts
+	echo "\usepackage[papersize={108mm,144mm},margin=2mm]{geometry}" > perfbook-1k.tex
+	sed -e 's/book/article/' -e 's/,twocolumn//' -e '/^\\frontmatter/a \\\\pagestyle{empty}' -e 's/setboolean{twocolumn}{true}/setboolean{twocolumn}{false}/' < perfbook.tex >> perfbook-1k.tex
+	cp perfbook-1c perbook-1k
+	sh utilities/runlatex.sh perfbook-1k bib
+
 perfbook_flat.tex: $(LATEXSOURCES) $(EPSSOURCES) embedfonts
 	echo > qqz.tex
 	texexpand perfbook.tex > perfbook_flat.tex
